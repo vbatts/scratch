@@ -42,10 +42,12 @@ const char* FG_ESCAPE = "\x1b[38;5;";
 const char* BG_ESCAPE = "\x1b[48;5;";
 const char* CLEAR = "\x1b[0m";
 
+const int TONE_MAX = 231;
+const int TONE_MIN = 17;
 // Color Tone:
 // We set it up here so others can use it.
 // 0 is black, so we'll steer from that.
-int tone = 1;
+int tone = 17;
 
 #ifdef HAVE_STATE
 const char* file = "/tmp/lolcat.state";
@@ -159,10 +161,10 @@ int main()
 		else
 			tone--;
 
-		if (tone == 255)
+		if (tone == TONE_MAX)
 			increasing = 0;
-		else if (tone == 1)
-			increasing = 1;
+		else if (tone == TONE_MIN)
+			increasing = TONE_MIN;
 	}
 
 	set_escape_clear();
