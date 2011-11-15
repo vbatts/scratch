@@ -1,0 +1,21 @@
+
+Mon Nov 14 22:46:22 EST 2011
+
+Information:
+  This is based on the inspiration of the
+  lolcat written in ruby (https://github.com/busyloop/lolcat)
+
+  but now with a bit of the speed of C.
+  also it has a state file that can keep up with where it
+  left off. Neat for sticking something in your $PS1 ;)
+
+Building:
+  $> make
+  $> make install DESTDIR=`pwd`/tmp
+
+Options:
+  To build without the state written to /tmp/lolcat.state,
+  just build like:
+  $> make no-state
+  $> make install DESTDIR=`pwd`/tmp
+
