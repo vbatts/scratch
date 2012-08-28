@@ -82,7 +82,7 @@ void set_start_tone() {
 
 	if (stat(file, &s) == -1)
 	{
-		printf("foo\n");
+		//printf("foo\n");
 		return ;
 	}
 
