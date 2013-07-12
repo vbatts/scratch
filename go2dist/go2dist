@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -e
+
+ts=$(date +"%Y%m%d%H%M%S")
+
+if [ "${#GOROOT}" -eq 0 ] ;then
+  echo "ERROR: required GOROOT env is not set"
+  exit 2
+fi
+if [ "${#1}" -eq 0 ] ;then
+  echo "ERROR: need an argument"
+  exit 2
+fi
+
+gr=${GOROOT}
+
+export GOPATH="/tmp/go2dist-${ts}/"
+go get ${1} || exit 2
+
+mkdir -p $GOPATH/$GOROOT/src/pkg
+mv $GOPATH/src/* $GOPATH/$GOROOT/src/pkg/
+rm -rf $GOPATH/src
+if [ -d ${GOPATH}/pkg ] ; then
+  mv $GOPATH/pkg $GOPATH/$GOROOT/
+fi
+if [ -d ${GOPATH}/bin ] ; then
+  mv $GOPATH/bin $GOPATH/$GOROOT/
+  pushd $GOPATH >/dev/null
+  mkdir -p usr/bin
+  if [ "${GOROOT:0:1}" == "/" ] ; then
+    GOROOT=${GOROOT:1}
+  fi
+  for file in $GOROOT/bin/* ; do
+    ln -sf ${file} usr/bin/
+  done
+  popd >/dev/null
+fi
+
+echo $GOPATH
+
+
+# vim:set sts=2 sw=2 et ai:
